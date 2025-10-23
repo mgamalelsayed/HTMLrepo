@@ -7,6 +7,12 @@ phases:
       - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 788670788080.dkr.ecr.eu-central-1.amazonaws.com
   build:
     commands:
+      - echo "--- DEBUG: Listing files in current directory ---"
+      - pwd # Print Working Directory
+      - ls -la # List all files with details
+      - echo "--- DEBUG: Displaying buildspec.yml content ---"
+      - cat buildspec.yml # Print the buildspec file it's using
+      - echo "--- END DEBUG ---"
       - echo Build started on `date`
       - echo Building the Docker image..
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
