@@ -9,7 +9,7 @@ phases:
     commands: # INDENTATION LEVEL 2 (usually 2 spaces)
       - echo Build started on `date` # INDENTATION LEVEL 3 (usually 4 spaces, starts with '- ')
       - echo Building the Docker image... # INDENTATION LEVEL 3
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG # INDENTATION LEVEL 3
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG. # INDENTATION LEVEL 3
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG # INDENTATION LEVEL 3
   post_build: # INDENTATION LEVEL 1
     commands: # INDENTATION LEVEL 2
