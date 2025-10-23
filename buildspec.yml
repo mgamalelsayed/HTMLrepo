@@ -4,26 +4,20 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 788670788080.dkr.ecr.eu-central-1.amazonaws.com
-  build:
-    commands:
-      - echo "--- DEBUG: Listing files in current directory ---"
-      - pwd # Print Working Directory
-      - ls -la # List all files with details
-      - echo "--- DEBUG: Displaying buildspec.yml content ---"
-      - cat buildspec.yml # Print the buildspec file it's using
-      - echo "--- END DEBUG ---"
-      - echo Build started on `date`
-      - echo Building the Docker image..
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-  post_build:
-    commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker image to ECR...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - echo Writing imagedefinitions.json...
-      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+  build: # INDENTATION LEVEL 1 (usually 0 spaces from left)
+    commands: # INDENTATION LEVEL 2 (usually 2 spaces)
+      - echo Build started on `date` # INDENTATION LEVEL 3 (usually 4 spaces, starts with '- ')
+      - echo Building the Docker image... # INDENTATION LEVEL 3
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG . # INDENTATION LEVEL 3
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG # INDENTATION LEVEL 3
+  post_build: # INDENTATION LEVEL 1
+    commands: # INDENTATION LEVEL 2
+      - echo Build completed on `date` # INDENTATION LEVEL 3
+      - echo Pushing the Docker image to ECR... # INDENTATION LEVEL 3
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG # INDENTATION LEVEL 3
+      - echo Writing imagedefinitions.json... # INDENTATION LEVEL 3
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json # INDENTATION LEVEL 3
 
-artifacts:
-  files: imagedefinitions.json
+artifacts: # INDENTATION LEVEL 1
+  files: imagedefinitions.json # INDENTATION LEVEL 2
